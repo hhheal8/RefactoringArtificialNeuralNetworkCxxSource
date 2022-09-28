@@ -1,0 +1,5 @@
+C:/Users/ictgi/Desktop/ArtificialNeuralNetworkCxxSource/build/CMakeFiles/ArtificialNeuralNetworkCpp.dir
+C:/Users/ictgi/Desktop/ArtificialNeuralNetworkCxxSource/build/CMakeFiles/package.dir
+C:/Users/ictgi/Desktop/ArtificialNeuralNetworkCxxSource/build/CMakeFiles/package_source.dir
+C:/Users/ictgi/Desktop/ArtificialNeuralNetworkCxxSource/build/CMakeFiles/edit_cache.dir
+C:/Users/ictgi/Desktop/ArtificialNeuralNetworkCxxSource/build/CMakeFiles/rebuild_cache.dir
