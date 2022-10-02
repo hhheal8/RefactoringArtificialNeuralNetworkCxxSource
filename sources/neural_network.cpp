@@ -14,12 +14,12 @@
 #include "neuron.hpp"
 #include "var_type_alias.hpp"
 
-neural_network::neural_network(vec1d_szt topology, double bias, double learning_rate, double momentum):
+neural_network::neural_network(vec1d_int topology, double bias, double learning_rate, double momentum):
 m_topology(topology), m_bias(bias), m_learning_rate(learning_rate), m_momentum(momentum) {
 
   m_topology_size = m_topology.size();
   
-  for(size_t i{}; i < m_topology_size; ++i) {
+  for(int i{}; i < m_topology_size; ++i) {
     if(i > 0 && i < (m_topology_size - 1)) {
       layer *l = new layer(m_topology.at(i), m_hidden_activation_type);
       m_layers.emplace_back(l);
@@ -31,18 +31,18 @@ m_topology(topology), m_bias(bias), m_learning_rate(learning_rate), m_momentum(m
     }
     else {
       layer *l = new layer(m_topology.at(i));
-      m_layers.emplace_back(i);
+      m_layers.emplace_back(l);
       dealloc_all(l);
     }
   }
 
-  for(size_t i{}; i < (m_topology_size - 1); ++i) {
+  for(int i{}; i < (m_topology_size - 1); ++i) {
     matrix *weight_matrix = new matrix(m_topology.at(i), m_topology.at(i + 1), true);
     m_weight_matrices.emplace_back(weight_matrix);
     dealloc_all(weight_matrix);
   }
 
-  for(size_t i{}; i < m_topology.at((m_topology_size - 1)); ++i) {
+  for(int i{}; i < m_topology.at((m_topology_size - 1)); ++i) {
     m_errors.emplace_back(0.00);
   }
 
@@ -51,10 +51,10 @@ m_topology(topology), m_bias(bias), m_learning_rate(learning_rate), m_momentum(m
 }
 
 neural_network::neural_network(
-  vec1d_szt topology, 
-  size_t hidden_activation_type, 
-  size_t output_activation_type, 
-  size_t cost_fun_type, 
+  vec1d_int topology, 
+  int hidden_activation_type, 
+  int output_activation_type, 
+  int cost_fun_type, 
   double bias, 
   double learning_rate, 
   double momentum
@@ -63,7 +63,7 @@ neural_network::neural_network(
   m_cost_fun_type(cost_fun_type), m_bias(bias), 
   m_learning_rate(learning_rate), m_momentum(momentum) {
   
-  for(size_t i{}; i < m_topology_size; ++i) {
+  for(int i{}; i < m_topology_size; ++i) {
     if(i > 0 && i < (m_topology_size - 1)) {
       layer *l = new layer(m_topology.at(i), m_hidden_activation_type);
       m_layers.emplace_back(l);
@@ -75,18 +75,18 @@ neural_network::neural_network(
     }
     else {
       layer *l = new layer(m_topology.at(i));
-      m_layers.emplace_back(i);
+      m_layers.emplace_back(l);
       dealloc_all(l);
     }
   }
 
-  for(size_t i{}; i < (m_topology_size - 1); ++i) {
+  for(int i{}; i < (m_topology_size - 1); ++i) {
     matrix *weight_matrix = new matrix(m_topology.at(i), m_topology.at(i + 1), true);
     m_weight_matrices.emplace_back(weight_matrix);
     dealloc_all(weight_matrix);
   }
 
-  for(size_t i{}; i < m_topology.at((m_topology_size - 1)); ++i) {
+  for(int i{}; i < m_topology.at((m_topology_size - 1)); ++i) {
     m_errors.emplace_back(0.00);
   }
 
@@ -96,7 +96,7 @@ neural_network::neural_network(
 
 auto neural_network::set_current_input(vec1d_dbl input) -> void {
   m_input = input;
-  for(size_t i{}; i < m_input.size(); ++i) {
+  for(int i{}; i < m_input.size(); ++i) {
     m_layers.at(0)->set_val(i, m_input.at(i));
   }
 }
@@ -107,7 +107,7 @@ auto neural_network::feed_forward() -> void {
   matrix *b; //Matrix of weights to the left of layer
   matrix *c; //Matrix of neurons to the next layer
 
-  for(size_t i{}; i < (m_topology_size - 1); ++i) {
+  for(int i{}; i < (m_topology_size - 1); ++i) {
     a = get_neuron_matrix(i);
     b = get_weight_matrix(i);
     c = new matrix(a->get_row(), b->get_col(), false); 
@@ -118,7 +118,7 @@ auto neural_network::feed_forward() -> void {
 
     utils::ANN_math::multiply_matrix(a, b, c);
 
-    for(size_t c_i{}; c_i < c->get_row(); ++c_i) {
+    for(int c_i{}; c_i < c->get_row(); ++c_i) {
       set_neuron_val(i + 1, c_i, c->get_val(0, c_i) + m_bias);
     }
 
@@ -143,13 +143,13 @@ auto neural_network::back_propagation() -> void {
   matrix *transposed_hidden;
   
   //PART 1: Output to last hidden layer
-  size_t index_output_layer = m_topology.size() - 1;
+  int index_output_layer = m_topology.size() - 1;
 
   gradients = new matrix(1, m_topology.at(index_output_layer), false);
 
   derived_values = m_layers.at(index_output_layer)->matrixify_derived_vals();
 
-  for(size_t i{}; i < m_topology.at(index_output_layer); ++i) {
+  for(int i{}; i < m_topology.at(index_output_layer); ++i) {
     double e = m_derived_errors.at(i);
     double y = derived_values->get_val(0, i);
     double g = e * y;
@@ -168,8 +168,8 @@ auto neural_network::back_propagation() -> void {
   //Compute for new weights (last hidden <-> output)
   temp_new_weights = new matrix(m_topology.at(index_output_layer - 1), m_topology.at(index_output_layer), false);
 
-  for(size_t r{}; m_topology.at(index_output_layer - 1); ++r) {
-    for(size_t c{}; m_topology.at(index_output_layer); ++c) {
+  for(int r{}; m_topology.at(index_output_layer - 1); ++r) {
+    for(int c{}; m_topology.at(index_output_layer); ++c) {
       double original_weight_val = m_weight_matrices.at(index_output_layer - 1)->get_val(r, c);
       double delta_val = delta_weights->get_val(r, c);
       
@@ -186,7 +186,7 @@ auto neural_network::back_propagation() -> void {
   dealloc_all(gradients_transpose, z_activated_val, temp_new_weights, delta_weights, derived_values);
 
   //Hidden output layer
-  for(size_t i{(index_output_layer - 1)}; i > 0; --i) {
+  for(int i{(index_output_layer - 1)}; i > 0; --i) {
 
     p_gradients = new matrix(*gradients);
     dealloc_all(p_gradients);
@@ -195,11 +195,11 @@ auto neural_network::back_propagation() -> void {
 
     gradients = new matrix(p_gradients->get_row(), transpose_p_weights->get_col(), false);
 
-    ::utils::ANN_math::multiply_matrix(p_gradients, transpose_p_weights, gradients);
+    utils::ANN_math::multiply_matrix(p_gradients, transpose_p_weights, gradients);
 
     hidden_derived = m_layers.at(i)->matrixify_derived_vals();
 
-    for(size_t c_counter{}; c_counter < hidden_derived->get_row(); ++c_counter) {
+    for(int c_counter{}; c_counter < hidden_derived->get_row(); ++c_counter) {
       double g = gradients->get_val(0, c_counter) * hidden_derived->get_val(0, c_counter);
       gradients->set_val(0, c_counter, g);
     }
@@ -220,8 +220,8 @@ auto neural_network::back_propagation() -> void {
     //Update weights
     temp_new_weights = new matrix(m_weight_matrices.at(i - 1)->get_row(), m_weight_matrices.at(i - 1)->get_col(), false);
 
-    for(size_t r{}; temp_new_weights->get_row(); ++r) {
-      for(size_t c{}; temp_new_weights->get_col(); ++c) {
+    for(int r{}; temp_new_weights->get_row(); ++r) {
+      for(int c{}; temp_new_weights->get_col(); ++c) {
         double original_weight_val = m_weight_matrices.at(i - 1)->get_val(r, c);
         double delta_val = delta_weights->get_val(r, c);
         
@@ -239,14 +239,14 @@ auto neural_network::back_propagation() -> void {
   }
   dealloc_all(gradients);
 
-  for(size_t i{}; i < m_weight_matrices.size(); ++i) {
+  for(int i{}; i < m_weight_matrices.size(); ++i) {
     delete m_weight_matrices[i];
   }
   m_weight_matrices.clear();
 
   std::reverse(new_weights.begin(), new_weights.end());
 
-  for(size_t i{}; i < new_weights.size(); ++i) {
+  for(int i{}; i < new_weights.size(); ++i) {
     m_weight_matrices.emplace_back(new matrix(*new_weights[i]));
     delete new_weights[i];
   }
@@ -255,12 +255,12 @@ auto neural_network::back_propagation() -> void {
 
 auto neural_network::set_error_MSE() -> void {
 
-  size_t output_layer_index = m_layers.size() - 1;
+  int output_layer_index = m_layers.size() - 1;
   std::vector<neuron*> output_neurons = m_layers.at(output_layer_index)->get_neuron();
 
   m_error = 0.00;
 
-  for(size_t i{}; i < m_target.size(); ++i) {
+  for(int i{}; i < m_target.size(); ++i) {
     double t = m_target.at(i);
     double y = output_neurons.at(i)->get_derived_val();
 
@@ -282,7 +282,7 @@ auto neural_network::set_errors() -> void {
   //   std::cerr << "\nTarget size (" << m_target.size() << ") is not the same as output layer size: " 
   //             << m_layers.at(m_layers.size() - 1)->get_neuron().size() << "\n";
 
-  //   for(size_t i{}; i < m_target.size(); ++i) {
+  //   for(int i{}; i < m_target.size(); ++i) {
   //     std::cout << m_target.at(i) << "\n";
   //   }
   //   assert(false);

@@ -19,12 +19,12 @@ class neuron {
     double m_activated_val{}; 
     double m_derived_val{};
 
-    size_t m_activation_type{3};
+    int m_activation_type{3};
 
   public:
 
     neuron(double val);
-    neuron(double val, size_t activation_type);
+    neuron(double val, int activation_type);
 
     auto set_val(double val) -> void; 
 

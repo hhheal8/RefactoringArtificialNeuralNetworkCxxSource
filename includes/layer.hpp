@@ -18,7 +18,7 @@ class layer {
 
   private: 
 
-    const_szt m_size{};
+    const_int m_size{};
 
     using vec1d_neuron_p = std::vector<neuron*>; //REVIEW: neuron_p - neuron*
 
@@ -26,10 +26,10 @@ class layer {
 
   public:
 
-    layer(size_t size);
-    layer(size_t size, size_t activation_type);
+    layer(int size);
+    layer(int size, int activation_type);
 
-    auto set_val(size_t i_layer, double val) -> void;
+    auto set_val(int i_layer, double val) -> void;
     
     matrix *matrixify_vals();
     matrix *matrixify_activated_vals(); 

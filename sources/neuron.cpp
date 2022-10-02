@@ -9,7 +9,7 @@ neuron::neuron(double val) {
   set_val(val);
 }
 
-neuron::neuron(double val, size_t activation_type): m_activation_type(activation_type) {
+neuron::neuron(double val, int activation_type): m_activation_type(activation_type) {
   set_val(val);
 }
 

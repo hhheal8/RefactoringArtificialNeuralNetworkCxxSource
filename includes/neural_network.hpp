@@ -27,12 +27,12 @@ class neural_network {
 
   public:
 
-    size_t m_topology_size{};
-    size_t m_hidden_activation_type{RELU};
-    size_t m_output_activation_type{SIGM};
-    size_t m_cost_fun_type{COST_MSE};
+    int m_topology_size{};
+    int m_hidden_activation_type{RELU};
+    int m_output_activation_type{SIGM};
+    int m_cost_fun_type{COST_MSE};
 
-    vec1d_szt m_topology;
+    vec1d_int m_topology;
 
     using vec1d_layer_p = std::vector<layer*>; //REVIEW: layer_p - layer*
     using vec1d_matrix_p = std::vector<matrix*>; //REVIEW: matrix_p - matrix*
@@ -54,17 +54,17 @@ class neural_network {
   public:
     
     neural_network(
-      vec1d_szt topology, 
+      vec1d_int topology, 
       double bias,
       double learning_rate,
       double momentum
     );
 
     neural_network(
-      vec1d_szt topology, 
-      size_t hidden_activation_type,
-      size_t output_activation_type,
-      size_t cost_fun_type,
+      vec1d_int topology, 
+      int hidden_activation_type,
+      int output_activation_type,
+      int cost_fun_type,
       double bias,
       double learning_rate,
       double momentum
@@ -77,15 +77,15 @@ class neural_network {
     auto back_propagation() -> void;
     auto set_errors() -> void;
 
-    auto get_activated_vals(size_t index) const -> vec1d_dbl { return m_layers.at(index)->get_activated_vals(); }
+    auto get_activated_vals(int index) const -> vec1d_dbl { return m_layers.at(index)->get_activated_vals(); }
 
-    matrix *get_neuron_matrix(size_t index) { return m_layers.at(index)->matrixify_vals(); }
+    matrix *get_neuron_matrix(int index) { return m_layers.at(index)->matrixify_vals(); }
 
-    matrix *get_activated_neuron_matrix(size_t index) { return m_layers.at(index)->matrixify_activated_vals(); }
-    matrix *get_derived_neuron_matrix(size_t index) { return m_layers.at(index)->matrixify_derived_vals(); }
-    matrix *get_weight_matrix(size_t index) { return new matrix(*this->m_weight_matrices.at(index)); }
+    matrix *get_activated_neuron_matrix(int index) { return m_layers.at(index)->matrixify_activated_vals(); }
+    matrix *get_derived_neuron_matrix(int index) { return m_layers.at(index)->matrixify_derived_vals(); }
+    matrix *get_weight_matrix(int index) { return new matrix(*this->m_weight_matrices.at(index)); }
 
-    auto set_neuron_val(size_t i_layer, size_t i_neuron, double val) -> void { m_layers.at(i_layer)->set_val(i_neuron, val); };
+    auto set_neuron_val(int i_layer, int i_neuron, double val) -> void { m_layers.at(i_layer)->set_val(i_neuron, val); };
 
   private:
 

@@ -8,12 +8,12 @@
 #include "dealloc_all.hpp"
 #include "var_type_alias.hpp"
 
-matrix::matrix(size_t row, size_t col, bool is_random): 
+matrix::matrix(int row, int col, bool is_random): 
 m_row(row), m_col(col) {
   
-  for(size_t i{}; i < m_row; ++i) {
+  for(int i{}; i < m_row; ++i) {
     std::vector<double> col_values;
-    for(size_t j{}; j < m_col; ++j) {
+    for(int j{}; j < m_col; ++j) {
       double random = is_random == true ? gen_random_number() : 0.00;
       col_values.emplace_back(random);
     }
@@ -26,8 +26,8 @@ matrix *matrix::transpose() {
 
   matrix *m = new matrix(m_col, m_row, false);
 
-  for(size_t i{}; i < m_row; ++i) {
-    for(size_t j{}; j < m_col; ++j) {
+  for(int i{}; i < m_row; ++i) {
+    for(int j{}; j < m_col; ++j) {
       m->set_val(j, i, get_val(i, j));
     }
   }
@@ -42,8 +42,8 @@ matrix *matrix::copy() {
 
   matrix *m = new matrix(m_row, m_col, false);
 
-  for(size_t i{}; i < m_row; ++i) {
-    for(size_t j{}; j < m_col; ++j) {
+  for(int i{}; i < m_row; ++i) {
+    for(int j{}; j < m_col; ++j) {
       m->set_val(i, j, get_val(i, j));
     }
   }
@@ -62,8 +62,8 @@ auto matrix::gen_random_number() const -> double {
 }
 
 auto matrix::display_result() -> void {
-  for(size_t i{}; i < m_row; ++i) {
-    for(size_t j{}; j < m_col; ++j) {
+  for(int i{}; i < m_row; ++i) {
+    for(int j{}; j < m_col; ++j) {
       std::cout << m_values.at(i).at(j) << "\t\t";
     }
     std::cout << "\n";

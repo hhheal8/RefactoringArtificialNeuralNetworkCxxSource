@@ -3,9 +3,9 @@
 
 #include <vector>
 
-using const_szt = const size_t; //REVIEW: szt - size_t
+using const_int = const int; //REVIEW: szt - int
 using vec2d_dbl = std::vector<std::vector<double>>; //REVIEW: dbl - double
 using vec1d_dbl = std::vector<double>; //REVIEW: dbl - double
-using vec1d_szt = std::vector<size_t>; //REVIEW: szt - size_t
+using vec1d_int = std::vector<int>; //REVIEW: szt - int
 
 #endif // VAR_TYPE_ALIAS_H

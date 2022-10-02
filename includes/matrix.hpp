@@ -16,8 +16,8 @@ class matrix {
 
     auto gen_random_number() const -> double;
 
-    size_t m_row{}; 
-    size_t m_col{};
+    int m_row{}; 
+    int m_col{};
 
     // bool m_is_random{};
     
@@ -25,23 +25,23 @@ class matrix {
 
   public:
 
-    matrix(size_t row, size_t col, bool is_random);
+    matrix(int row, int col, bool is_random);
 
     matrix *transpose();
     matrix *copy();
 
-    auto set_val(size_t r, size_t c, double val) -> void {
+    auto set_val(int r, int c, double val) -> void {
       m_values.at(r).at(c) = val;
     }
 
-    auto get_val(size_t r, size_t c) const -> double { 
+    auto get_val(int r, int c) const -> double { 
       return m_values.at(r).at(c); 
     }
 
     auto get_values() const -> vec2d_dbl { return m_values; }
 
-    auto get_row() const -> size_t { return m_row; }
-    auto get_col() const -> size_t { return m_col; }
+    auto get_row() const -> int { return m_row; }
+    auto get_col() const -> int { return m_col; }
 
     auto display_result() -> void;
 
