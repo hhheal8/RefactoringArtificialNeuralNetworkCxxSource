@@ -9,19 +9,15 @@
 #include "var_type_alias.hpp"
 
 matrix::matrix(size_t row, size_t col, bool is_random): 
-m_row(row), m_col(col), m_is_random(is_random) {
+m_row(row), m_col(col) {
   
   for(size_t i{}; i < m_row; ++i) {
-
     std::vector<double> col_values;
-
     for(size_t j{}; j < m_col; ++j) {
       double random = is_random == true ? gen_random_number() : 0.00;
       col_values.emplace_back(random);
     }
-
     m_values.emplace_back(col_values);
-
   }
 
 }

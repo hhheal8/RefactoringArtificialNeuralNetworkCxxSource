@@ -14,13 +14,14 @@ class matrix {
 
   private:
 
-    const_szt m_row{}; 
-    const_szt m_col{};
-    bool m_is_random{};
+    auto gen_random_number() const -> double;
+
+    size_t m_row{}; 
+    size_t m_col{};
+
+    // bool m_is_random{};
     
     vec2d_dbl m_values;
-
-    auto gen_random_number() const -> double;
 
   public:
 
@@ -36,6 +37,8 @@ class matrix {
     auto get_val(size_t r, size_t c) const -> double { 
       return m_values.at(r).at(c); 
     }
+
+    auto get_values() const -> vec2d_dbl { return m_values; }
 
     auto get_row() const -> size_t { return m_row; }
     auto get_col() const -> size_t { return m_col; }

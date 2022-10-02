@@ -3,6 +3,7 @@
 
 #define COST_MSE 1
 
+#include <assert.h>
 #include <algorithm>
 #include <iostream>
 #include <math.h>
@@ -10,13 +11,17 @@
 // #include <string>
 #include <vector>
 
+#include "ANN_math.hpp"
 #include "dealloc_all.hpp"
 #include "layer.hpp"
 #include "matrix.hpp"
+#include "neuron.hpp"
 #include "var_type_alias.hpp"
 
+class ANN_math;
 class layer;
 class matrix;
+class neuron;
 
 class neural_network {
 
@@ -87,6 +92,5 @@ class neural_network {
     auto set_error_MSE() -> void;
 
 };
-
 
 #endif // NEURAL_NETWORK_H
