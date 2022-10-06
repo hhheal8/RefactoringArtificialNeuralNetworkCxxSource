@@ -8,6 +8,7 @@ add_executable(
   ArtificialNeuralNetworkCpp 
   main.cpp
 
+  sources/json.cpp
   sources/layer.cpp
   sources/matrix.cpp
   sources/utils/ANN_math.cpp

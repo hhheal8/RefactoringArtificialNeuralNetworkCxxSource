@@ -5,14 +5,18 @@
 
 #include <assert.h>
 #include <algorithm>
+#include <fstream>
 #include <iostream>
 #include <math.h>
 #include <random>
 // #include <string>
+#include <sstream>
+#include <time.h>
 #include <vector>
 
 #include "ANN_math.hpp"
 #include "dealloc_all.hpp"
+#include "json.hpp"
 #include "layer.hpp"
 #include "matrix.hpp"
 #include "neuron.hpp"

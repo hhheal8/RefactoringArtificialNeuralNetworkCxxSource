@@ -189,7 +189,7 @@ auto neural_network::back_propagation() -> void {
   for(int i{(index_output_layer - 1)}; i > 0; --i) {
 
     p_gradients = new matrix(*gradients);
-    dealloc_all(p_gradients);
+    dealloc_all(gradients);
     
     transpose_p_weights = m_weight_matrices.at(i)->transpose();
 

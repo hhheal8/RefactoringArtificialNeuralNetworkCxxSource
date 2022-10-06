@@ -15,10 +15,6 @@ namespace utils {
 
   class ANN_math {
     
-    private:
-
-
-
     public:
 
       static auto multiply_matrix(matrix *a, matrix *b, matrix *c) -> void;
